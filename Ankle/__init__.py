@@ -49,7 +49,7 @@ def getAnklePoint(img):
         img (numpy array): A grayscale ankle image
  
     Returns:
-        tuple of int: position of ankle point
+        tuple of int: position of ankle point (y, x)
     """
 
     th = cv2.adaptiveThreshold(img,255,cv2.ADAPTIVE_THRESH_GAUSSIAN_C,cv2.THRESH_BINARY_INV,31,5)
