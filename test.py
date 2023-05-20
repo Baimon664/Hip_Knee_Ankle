@@ -5,6 +5,7 @@ import cv2
 from roboflow import Roboflow
 from segment_anything import sam_model_registry, SamPredictor
 import torch
+from kneeBottom import check_peak, check_row, find_tibia_point
 
 # load .env
 import os
@@ -69,12 +70,17 @@ for box in bboxes_kt:
 
 # point kneeBottom
 bboxes_kb = getBoxesfromPred(pred_kneeBottom)
+kneeBot = []
 for box in bboxes_kb:
     masks, scores, logits = sam_model.predict(
           box=box,
           multimask_output=False
       )
       # TODO: getPoint(masks[0])
-
+    y,x = find_tibia_point(masks[0])
+    kneeBot.append([x,y])
+kneeBot.sort()
+left_bot_knee = kneeBot[0]
+right_bot_knee = kneeBot[1]
 print("Success")
 cv2.imwrite("result.jpg", image_result)
