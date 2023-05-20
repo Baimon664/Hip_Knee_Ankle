@@ -42,9 +42,10 @@ print("loading SAM...")
 sam_checkpoint = "sam_vit_h_4b8939.pth"
 model_type = "vit_h"
 sam = sam_model_registry[model_type](checkpoint=sam_checkpoint)
-print("CUDA is available:", torch.cuda.is_available())
-if torch.cuda.is_available():
-    sam.to(device="cuda")
+# print("CUDA is available:", torch.cuda.is_available())
+# if torch.cuda.is_available():
+#     sam.to(device="cuda")
+sam.to(device="cpu")
 sam_model = SamPredictor(sam)
 sam_model.set_image(image_rgb)
 
@@ -74,7 +75,7 @@ for box in bboxes_kt:
     #left
     coordinate = getCenterTopKnee(masks[0])
     topKnee.append(coordinate)
-    cv2.circle(image_result, (coordinate[1], coordinate[0]), 5, [0,0,255], 5)
+    cv2.circle(image_result, (int(coordinate[1]), int(coordinate[0])), 5, [0,0,255], 5)
 left_top_knee = min(topKnee, key=lambda x:x[1])
 right_top_knee = max(topKnee, key=lambda x:x[1])
 # point kneeBottom
