@@ -1,6 +1,7 @@
 from Detector import getAnkle, getRFSegment, getBoxesfromPred
 from Ankle import getAnklePoint
 from Hip import getCircle
+from topKnee import getCenterTopKnee
 import cv2
 from roboflow import Roboflow
 from segment_anything import sam_model_registry, SamPredictor
@@ -61,13 +62,21 @@ cv2.circle(image_result,(right_center[1],right_center[0]),2,(0,0,255),3)
 
 # point kneeTop
 bboxes_kt = getBoxesfromPred(pred_kneeTop)
+
+
+topKnee = []
 for box in bboxes_kt:
     masks, scores, logits = sam_model.predict(
           box=box,
           multimask_output=False
       )
     # TODO: getPoint(masks[0])
-
+    #left
+    coordinate = getCenterTopKnee(masks[0])
+    topKnee.append(coordinate)
+    cv2.circle(image_result, (coordinate[1], coordinate[0]), 5, [0,0,255], 5)
+left_top_knee = min(topKnee, key=lambda x:x[1])
+right_top_knee = max(topKnee, key=lambda x:x[1])
 # point kneeBottom
 bboxes_kb = getBoxesfromPred(pred_kneeBottom)
 kneeBot = []
