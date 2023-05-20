@@ -62,7 +62,7 @@ def getCenterTopKnee(image):
   defaultImage = image
 
   max_width = GetBounaryImage(defaultImage,False)
-  print(max_width)
+  # print(max_width)
   image_with_line = defaultImage.copy()
 
 
