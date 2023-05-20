@@ -2,6 +2,7 @@ from HKA_angle import get_HKA_angle
 import tkinter as tk
 from tkinter import filedialog
 from tkinter.filedialog import asksaveasfilename
+from tkinter import messagebox
 from PIL import Image, ImageTk
 from utils import image_resize
 import threading
@@ -40,21 +41,24 @@ def upload_image():
         original_image_label.image = original_photo
 
         # Calculate HKA
-        image = get_HKA_angle(file_path)
-        pred_image = image.copy()
-        image_resized = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-        image_resized = image_resize(image_resized, height=550)
+        try:
+            image = get_HKA_angle(file_path)
+            pred_image = image.copy()
+            image_resized = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+            image_resized = image_resize(image_resized, height=550)
 
-        # Convert the image to PIL format
-        image_pil = Image.fromarray(image_resized)
+            # Convert the image to PIL format
+            image_pil = Image.fromarray(image_resized)
 
-        # Create a Tkinter-compatible photo image
-        photo = ImageTk.PhotoImage(image_pil)
+            # Create a Tkinter-compatible photo image
+            photo = ImageTk.PhotoImage(image_pil)
 
-        # Create a label to display the image
-        prediction_image_label.configure(image=photo)
-        prediction_image_label.image = photo
-        save_button["state"] = "active"
+            # Create a label to display the image
+            prediction_image_label.configure(image=photo)
+            prediction_image_label.image = photo
+            save_button["state"] = "active"
+        except Exception as error:
+            messagebox.showerror("Something went wring", str(error))
 
 root = tk.Tk()
 root.geometry("1000x600")
