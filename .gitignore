@@ -3,3 +3,6 @@ dev_talus_norm_gray_1024/
 dev_norm/
 dev_talus_res/
 dev_talus_res_rotated/
+
+**/__pycache__/
+.env

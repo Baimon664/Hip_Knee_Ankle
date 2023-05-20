@@ -1,10 +1,9 @@
 import cv2
 import numpy as np
 from matplotlib import pyplot as plt
-import os
 from .utils.preprocess import preprocess
 from .utils.peakDetect import getBreakpoint
-from .utils.templateMatcher import templateMatcher, rotate_image
+from .utils.templateMatcher import templateMatcher
 
 # Set parameters
 ## Templates
@@ -77,3 +76,25 @@ def getAnkle(img):
 
     return left_ankle, left_position, right_ankle, right_position
     
+def getRFSegment(rf_model, IMAGE_PATH):
+    pred = rf_model.predict(IMAGE_PATH).json()["predictions"]
+    pred_femoral_circle = getItembyClass(pred,"femoral circle")
+    pred_femur_end = getItembyClass(pred,"femur end")
+    pred_tibia_top = getItembyClass(pred,"tibia top")
+    
+    return pred_femoral_circle, pred_femur_end, pred_tibia_top
+
+def getItembyClass(pred, class_str):
+  return [item for item in pred if item["class"]==class_str]
+
+def getBoxesfromPred(pred):
+  boxes=[]
+  for item in pred:
+    box = np.array([
+      item['x'] - item['width']/2, 
+      item['y'] - item['height']/2, 
+      item['x'] + item['width']/2, 
+      item['y'] + item['height']/2
+    ])
+    boxes.append(box)
+  return boxes
