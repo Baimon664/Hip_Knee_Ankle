@@ -60,7 +60,7 @@ def getCenterTopKnee(image):
   defaultImage = image
 
   max_width = GetBounaryImage(defaultImage,False,False)
-  print(max_width)
+  # print(max_width)
   image_with_line = defaultImage.copy()
 
 
@@ -86,14 +86,14 @@ def getCenterTopKnee(image):
         if ( regionsCount >= 2): isFoundNumberMoreThanTwo = True
         if(isFoundNumberMoreThanTwo == True and regionsCount == 1 and width > 0.6*(max_width)): 
           selected_index= i
-          print('index',i,case)
+          # print('index',i,case)
           breaked = True
           break
       case 2:
         if ( regionsCount >= 2): pass
         if (regionsCount == 1 and width > 0.6*(max_width)):
           selected_index= i
-          print('index',i,case)
+          # print('index',i,case)
           breaked = True
           break
 
