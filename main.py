@@ -58,7 +58,7 @@ def upload_image():
             prediction_image_label.image = photo
             save_button["state"] = "active"
         except Exception as error:
-            messagebox.showerror("Something went wring", str(error))
+            messagebox.showerror("Something went wrong", str(error))
 
 root = tk.Tk()
 root.geometry("1000x600")
