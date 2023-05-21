@@ -38,7 +38,6 @@ def GetBounaryImage(image, isCoordinate,isCenter):
       if x + width > rightmost_x:
           rightmost_x = x
           rightmost_x_width= width
-
   if(isCenter):
     return (leftmost_x+rightmost_x+rightmost_x_width)/2
   if(isCoordinate):
@@ -60,8 +59,8 @@ def GetBounaryImage(image, isCoordinate,isCenter):
 def getCenterTopKnee(image):
   defaultImage = image
 
-  max_width = GetBounaryImage(defaultImage,False)
-  breaked = False
+  max_width = GetBounaryImage(defaultImage,False,False)
+  print(max_width)
   image_with_line = defaultImage.copy()
 
 
@@ -69,12 +68,11 @@ def getCenterTopKnee(image):
   case = 0
   isFoundNumberMoreThanTwo = False
   isAssginCase = False
-
+  breaked = False
   selected_index = 0
   for i in range (defaultImage.shape[0],1,-1):
     image = defaultImage[i-1:i,:]
     regionsCount, width = callGetRegionInImage(image)
-    # print(regionsCount, case)
     match case:
       case 0:
         if(regionsCount == 0): pass
@@ -88,15 +86,15 @@ def getCenterTopKnee(image):
         if ( regionsCount >= 2): isFoundNumberMoreThanTwo = True
         if(isFoundNumberMoreThanTwo == True and regionsCount == 1 and width > 0.6*(max_width)): 
           selected_index= i
+          print('index',i,case)
           breaked = True
-          # print('index',i,case)
           break
       case 2:
         if ( regionsCount >= 2): pass
         if (regionsCount == 1 and width > 0.6*(max_width)):
           selected_index= i
+          print('index',i,case)
           breaked = True
-          # print('index',i,case)
           break
 
   if breaked == False:
@@ -108,5 +106,4 @@ def getCenterTopKnee(image):
         coordinate_y = i
         break
     return (coordinate_y,coordinate_x)
-  
-  return selected_index+0.5,GetBounaryImage(defaultImage[selected_index:selected_index+1,:],True)
+  return selected_index+0.5,GetBounaryImage(defaultImage[selected_index:selected_index+1,:],True,False)
