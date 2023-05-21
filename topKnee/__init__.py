@@ -15,7 +15,7 @@ def callGetRegionInImage(image):
   return num_regions,component_width
 
 
-def GetBounaryImage(image, isCoordinate):
+def GetBounaryImage(image, isCoordinate,isCenter):
   # Threshold the image to obtain a binary image
   image = np.uint8(image)
   # Find contours in the binary image
@@ -38,10 +38,9 @@ def GetBounaryImage(image, isCoordinate):
       if x + width > rightmost_x:
           rightmost_x = x
           rightmost_x_width= width
-  # Print the leftmost x-coordinate
-  # print("Leftmost x-coordinate:", leftmost_x)
-  # print("Rightmost x-coordinate:", rightmost_x)
-  # print('Max width',rightmost_x-leftmost_x)
+
+  if(isCenter):
+    return (leftmost_x+rightmost_x+rightmost_x_width)/2
   if(isCoordinate):
       return (leftmost_x+leftmost_x_width+rightmost_x)/2
   return (rightmost_x+rightmost_x_width)-leftmost_x
@@ -62,7 +61,7 @@ def getCenterTopKnee(image):
   defaultImage = image
 
   max_width = GetBounaryImage(defaultImage,False)
-  # print(max_width)
+  breaked = False
   image_with_line = defaultImage.copy()
 
 
@@ -89,33 +88,25 @@ def getCenterTopKnee(image):
         if ( regionsCount >= 2): isFoundNumberMoreThanTwo = True
         if(isFoundNumberMoreThanTwo == True and regionsCount == 1 and width > 0.6*(max_width)): 
           selected_index= i
+          breaked = True
           # print('index',i,case)
           break
       case 2:
         if ( regionsCount >= 2): pass
         if (regionsCount == 1 and width > 0.6*(max_width)):
           selected_index= i
+          breaked = True
           # print('index',i,case)
           break
 
-  # cv2.line(image_with_line, (0,selected_index), (200,selected_index), (25,160,122), 1)
-
-
-  # plt.figure(figsize=(25,15))
-  # plt.subplot(2,3,1)
-  # plt.imshow(image_with_line,cmap= 'gray')
-  # plt.title('Original Image')
-
-
-  # plt.figure(figsize=(25,15))
-  # plt.subplot(2,3,1)
-  # plt.imshow(defaultImage[selected_index-20:selected_index+20,:],cmap= 'gray')
-  # plt.title('Original Image')
-
-  # plt.figure(figsize=(25,15))
-  # plt.subplot(2,3,1)
-  # plt.imshow(defaultImage[selected_index:selected_index+1,:],cmap= 'gray')
-  # plt.title('Original Image')
-
+  if breaked == False:
+    coordinate_x = GetBounaryImage(defaultImage,False,True)
+    coordinate_y = 0
+    new_image = defaultImage[:,int(coordinate_x):int(coordinate_x+1)]
+    for i in range(new_image.shape[0]-1,0,-1):
+      if new_image[i,0] == 1:
+        coordinate_y = i
+        break
+    return (coordinate_y,coordinate_x)
+  
   return selected_index+0.5,GetBounaryImage(defaultImage[selected_index:selected_index+1,:],True)
-  # return  defaultImage[selected_index:selected_index+1,:]
