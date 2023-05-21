@@ -99,9 +99,13 @@ def getCenterTopKnee(image):
 
   if breaked == False:
     coordinate_x = GetBounaryImage(defaultImage,False,True)
-    coordinate_y = 0
+    row = np.sum(defaultImage, axis=1)
+    row_where = np.where(row > 0)[0]
+    lowest = row_where[-1]
+    highest = row_where[0]
+    coordinate_y = lowest
     new_image = defaultImage[:,int(coordinate_x):int(coordinate_x+1)]
-    for i in range(new_image.shape[0]-1,0,-1):
+    for i in range(lowest,highest,-1):
       if new_image[i,0] == 1:
         coordinate_y = i
         break
