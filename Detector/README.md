@@ -51,7 +51,7 @@
 - We implemented SAM by using bounding box from Roboflow train segmentation as SAM's prompt to find more precise segmentation of the bone.
 
 <p align="center">
-<img src="https://github.com/Baimon664/Hip_Knee_Ankle/blob/main/images/sam.jpg" height="450">
+<img src="https://github.com/Baimon664/Hip_Knee_Ankle/blob/main/images/sam.jpg" height="300">
 </p>
 
 ## Test Results
