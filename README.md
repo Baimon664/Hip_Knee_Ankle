@@ -33,7 +33,7 @@ To find all of these we need to figure out the following points in the images:
 4. Upper midpoint of talus
 
 <p align="center">
-<img src="https://github.com/Baimon664/Hip_Knee_Ankle/blob/main/images/problem_statement_2.jpg" height="600">
+<img src="https://github.com/Baimon664/Hip_Knee_Ankle/blob/main/images/problem_statement_2.jpg" height="450">
 </p>
 
 # Technical Challenges
@@ -51,13 +51,13 @@ This work presented a deep learning approach to measuring lower limb alignment a
 <img src="https://github.com/Baimon664/Hip_Knee_Ankle/blob/main/images/pipeline.jpg" height="450">
 </p>
 
-1. Template Matcher
-2. AutoML: Roboflow Train
-3. Segment Anything Model (SAM)
-4. Hip Algorithm: Find Mose Circle
-5. Knee Algorithm: Find distal femur sulcus
-6. Knee Algorithm: Find interetibial spine
-7. Ankle Algorithm: Find upper midpoint of talus
+1. [Template Matching](https://github.com/Baimon664/Hip_Knee_Ankle/blob/main/Detector/README.md)
+2. [AutoML: Roboflow Train](https://github.com/Baimon664/Hip_Knee_Ankle/blob/main/Detector/README.md)
+3. [Segment Anything Model (SAM)](https://github.com/Baimon664/Hip_Knee_Ankle/blob/main/Detector/README.md)
+4. [Hip Algorithm: Find Mose Circle](https://github.com/Baimon664/Hip_Knee_Ankle/blob/main/hip/README.md)
+5. [Knee Algorithm: Find distal femur sulcus](https://github.com/Baimon664/Hip_Knee_Ankle/blob/main/topKnee/README.md)
+6. [Knee Algorithm: Find interetibial spine](https://github.com/Baimon664/Hip_Knee_Ankle/blob/main/kneeBottom/README.md)
+7. [Ankle Algorithm: Find upper midpoint of talus](https://github.com/Baimon664/Hip_Knee_Ankle/blob/main/Ankle/README.md)
 
 # Future Works:
 - Gather more dataset and labels to increase precision of the model
